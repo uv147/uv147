@@ -1,26 +1,33 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3' // The name of the Maven installation you configured in Jenkins
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/uv147/uv147.git'
+                // This checks out your Git repository
+                git 'https://github.com/uv147/uv147.git'
             }
         }
+
         stage('Build') {
             steps {
-                echo 'Building...'
+                // This runs the Maven clean and package commands
+                sh 'mvn clean package'
             }
         }
+
         stage('Test') {
             steps {
-                echo 'Testing...'
+                // This runs the Maven test command
+                sh 'mvn test'
             }
         }
+
         stage('Deploy') {
             steps {
+                // Add your deployment commands here, e.g., copying files to a server
                 echo 'Deploying...'
-            }
-        }
-    }
-}
